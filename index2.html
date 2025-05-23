@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -96,7 +97,7 @@
   <div class="container">
     <h2>Formulario de Registro</h2>
 
-    <form id="quizForm1" method="POST" action="https://script.google.com/macros/s/AKfycbzv6XHBPsiLfSjLfuGx50MsjsM6zNcv2AwnbyHFsR3x5pSM1XG29xmOS_JCVbXPcFQr/exec">
+    <form id="quizForm1" method="POST">
       <div class="pregunta">
         <label for="nombre">¿Nombre completo?</label>
         <input type="text" id="nombre" placeholder="Escribe tu nombre completo" required>
@@ -152,37 +153,41 @@
     </form>
   </div>
 <script>
-document.getElementById("quizForm1").addEventListener("submit", function (e) {
-  e.preventDefault();
+  document.getElementById("quizForm1").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  const formData = new FormData();
-  formData.append("nombre", document.getElementById("nombre").value);
-  formData.append("edad", document.getElementById("edad").value);
-  formData.append("sexo", document.getElementById("sexo").value);
-  formData.append("pueblo", document.getElementById("pueblo").value);
-  formData.append("lengua", document.getElementById("lengua").value);
-  formData.append("discapacidad", document.getElementById("discapacidad").value);
-  formData.append("institucion", document.getElementById("institucion").value);
-  formData.append("telefono", document.getElementById("telefono").value);
-  formData.append("correo", document.getElementById("correo").value);
+    const data = {
+      nombre: document.getElementById("nombre").value,
+      edad: document.getElementById("edad").value,
+      sexo: document.getElementById("sexo").value,
+      pueblo: document.getElementById("pueblo").value,
+      lengua: document.getElementById("lengua").value,
+      discapacidad: document.getElementById("discapacidad").value,
+      institucion: document.getElementById("institucion").value,
+      telefono: document.getElementById("telefono").value,
+      correo: document.getElementById("correo").value,
+    };
 
-  fetch("https://script.google.com/macros/s/AKfycbzv6XHBPsiLfSjLfuGx50MsjsM6zNcv2AwnbyHFsR3x5pSM1XG29xmOS_JCVbXPcFQr/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(response => response.text())
-  .then(result => {
-    alert("Formulario enviado con éxito.");
-    document.getElementById("quizForm1").reset();
-  })
-  .catch(error => {
-    alert("Error al enviar: " + error);
-    console.error(error);
+    fetch('http://localhost:3000/sendForm', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Respuesta del servidor no OK");
+      return res.json();  // usar .json() si tu servidor responde con JSON
+    })
+    .then(result => {
+      alert(result.message || "Formulario enviado con éxito");
+      document.getElementById("quizForm1").reset();
+      console.log("Formulario que se envió:", data);
+    })
+    .catch(err => {
+      alert('Error al enviar: ' + err.message);
+    });
   });
-});
-
 </script>
-
-
 </body>
 </html>
