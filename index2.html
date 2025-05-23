@@ -96,7 +96,7 @@
   <div class="container">
     <h2>Formulario de Registro</h2>
 
-    <form id="quizForm1" method="POST" action="https://script.google.com/macros/s/AKfycbx61zYwg2z3WGXnjbgYNuiVjUKe42wQbjiomvjHtgGCQF3fKiVYEPcCImrrR5lVudec/exec">
+    <form id="quizForm1" method="POST" action="https://script.google.com/macros/s/AKfycbzv6XHBPsiLfSjLfuGx50MsjsM6zNcv2AwnbyHFsR3x5pSM1XG29xmOS_JCVbXPcFQr/exec">
       <div class="pregunta">
         <label for="nombre">¿Nombre completo?</label>
         <input type="text" id="nombre" placeholder="Escribe tu nombre completo" required>
@@ -166,7 +166,7 @@ document.getElementById("quizForm1").addEventListener("submit", function (e) {
   formData.append("telefono", document.getElementById("telefono").value);
   formData.append("correo", document.getElementById("correo").value);
 
-  fetch("https://script.google.com/macros/s/AKfycbx61zYwg2z3WGXnjbgYNuiVjUKe42wQbjiomvjHtgGCQF3fKiVYEPcCImrrR5lVudec/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbzv6XHBPsiLfSjLfuGx50MsjsM6zNcv2AwnbyHFsR3x5pSM1XG29xmOS_JCVbXPcFQr/exec", {
     method: "POST",
     body: formData
   })
