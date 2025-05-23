@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Registro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  
+  <style>
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #e3eafc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      text-align: center;
+      background: white;
+      padding: 30px;
+    }
+
+    .header img {
+      max-width: 400px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-top: 10px solid #2a4abf;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2a4abf;
+      margin-bottom: 30px;
+    }
+
+    .pregunta {
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      background-color: #2a4abf;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #1d3699;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <img src="logo.png" alt="Logo Institucional">
+  </div>
+
+  <div class="container">
+    <h2>Formulario de Registro</h2>
+
+    <form id="quizForm1" method="POST" action="https://script.google.com/macros/s/AKfycbx61zYwg2z3WGXnjbgYNuiVjUKe42wQbjiomvjHtgGCQF3fKiVYEPcCImrrR5lVudec/exec">
+      <div class="pregunta">
+        <label for="nombre">¿Nombre completo?</label>
+        <input type="text" id="nombre" placeholder="Escribe tu nombre completo" required>
+      </div>
+
+      <div class="pregunta">
+        <label for="edad">¿Edad?</label>
+        <input type="text" id="edad" placeholder="Ej. 22 años" required>
+      </div>
+
+      <div class="pregunta">
+        <label for="sexo">¿Sexo?</label>
+        <select id="sexo" required>
+          <option value="">Selecciona</option>
+          <option>Mujer</option>
+          <option>Hombre</option>
+          <option>No binario</option>
+          <option>Prefiero no decirlo</option>
+        </select>
+      </div>
+
+      <div class="pregunta">
+        <label for="pueblo">¿Pertenece a un Pueblo Indígena y/o Afromexicano/a? ¿Cuál?</label>
+        <input type="text" id="pueblo" placeholder="Ej. Mixteco, Zapoteco, Afromexicano, etc.">
+      </div>
+
+      <div class="pregunta">
+        <label for="lengua">¿Habla alguna lengua indígena? ¿Cuál?</label>
+        <input type="text" id="lengua" placeholder="Ej. Zapoteco, Mixe, No">
+      </div>
+
+      <div class="pregunta">
+        <label for="discapacidad">¿Presenta algún tipo de discapacidad? ¿Cuál?</label>
+        <input type="text" id="discapacidad" placeholder="Ej. Visual, auditiva, motriz, ninguna">
+      </div>
+
+      <div class="pregunta">
+        <label for="institucion">Institución</label>
+        <input type="text" id="institucion" placeholder="Nombre de la universidad, preparatoria, etc.">
+      </div>
+
+      <div class="pregunta">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" placeholder="Ej. 9511234567">
+      </div>
+
+      <div class="pregunta">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" placeholder="correo@ejemplo.com">
+      </div>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+<script>
+document.getElementById("quizForm1").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("nombre", document.getElementById("nombre").value);
+  formData.append("edad", document.getElementById("edad").value);
+  formData.append("sexo", document.getElementById("sexo").value);
+  formData.append("pueblo", document.getElementById("pueblo").value);
+  formData.append("lengua", document.getElementById("lengua").value);
+  formData.append("discapacidad", document.getElementById("discapacidad").value);
+  formData.append("institucion", document.getElementById("institucion").value);
+  formData.append("telefono", document.getElementById("telefono").value);
+  formData.append("correo", document.getElementById("correo").value);
+
+  fetch("https://script.google.com/macros/s/AKfycbx61zYwg2z3WGXnjbgYNuiVjUKe42wQbjiomvjHtgGCQF3fKiVYEPcCImrrR5lVudec/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.text())
+  .then(result => {
+    alert("Formulario enviado con éxito.");
+    document.getElementById("quizForm1").reset();
+  })
+  .catch(error => {
+    alert("Error al enviar: " + error);
+    console.error(error);
+  });
+});
+
+</script>
+
+
+</body>
+</html>

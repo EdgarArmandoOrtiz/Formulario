@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Constancia de Participación</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body style="text-align:center; font-family:Arial;">
+  <h2>Generando tu constancia...</h2>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+    const nombre = localStorage.getItem("nombreAlumno");
+
+    if (!nombre) {
+      document.body.innerHTML = "<h2>Error: No hay datos. Por favor completa el formulario primero.</h2>";
+    } else {
+      const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+      const img = new Image();
+      img.src = "plantilla-diploma.jpg";
+
+      img.onload = function () {
+        doc.addImage(img, 'JPEG', 0, 0, 297, 210); // A4 horizontal
+
+        doc.setFont("Times", "italic"); // o usa una fuente personalizada si quieres
+        doc.setFontSize(28);
+        doc.setTextColor(233, 183, 46); // #e9b72e
+        doc.text(nombre, 148, 110, { align: "center" });
+
+        doc.save(`constancia-${nombre}.pdf`);
+        document.body.innerHTML = `<h2>🎉 Constancia generada. Revisa tu carpeta de descargas.</h2>`;
+      };
+    }
+  </script>
+</body>
+</html>
