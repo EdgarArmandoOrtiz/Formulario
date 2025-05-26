@@ -1,42 +1,33 @@
 const express = require('express');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-
-app.use(cors({
+const corsOptions = {
   origin: [
     'http://127.0.0.1:5500',
-    'http://localhost:5500',
     'https://edgararmandoortiz.github.io'
   ],
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
-}));
+};
 
-// Sirve archivos estáticos si tienes frontend en la carpeta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors(corsOptions));
+app.use(express.json());
 
-// Ruta principal (si usas HTML en el servidor)
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Responder OPTIONS para CORS preflight
+app.options('*', cors(corsOptions));
 
-// Ruta para recibir el formulario
 app.post('/sendForm', async (req, res) => {
   const formData = req.body;
+
   console.log("Datos recibidos del frontend:", formData);
 
   try {
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbx6Fv3aMrO4Zzsj4MRgvohE5UKc_aw8flqaL3pYz5XDXqaTlLMoUTeNjhC_QqgXr4jO/exec';
+
     const params = new URLSearchParams(formData);
 
     const response = await fetch(scriptUrl, {
@@ -49,7 +40,6 @@ app.post('/sendForm', async (req, res) => {
 
     if (response.ok) {
       res.status(200).send({ message: 'Formulario enviado con éxito', response: text });
-      console.log("Enviando datos al script:", params.toString());
     } else {
       res.status(response.status).send({ error: 'Error al enviar al script', details: text });
     }
@@ -60,7 +50,6 @@ app.post('/sendForm', async (req, res) => {
   }
 });
 
-// Escucha el puerto asignado por Render
 app.listen(PORT, () => {
-  console.log(`Servidor backend escuchando en el puerto ${PORT}`);
+  console.log(`Servidor backend escuchando en http://localhost:${PORT}`);
 });
