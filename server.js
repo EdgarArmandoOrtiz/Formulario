@@ -11,8 +11,8 @@ const allowedOrigins = [
   'https://edgararmandoortiz.github.io'
 ];
 
-// Configurar CORS
-app.use(cors({
+// Opciones de CORS
+const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -21,9 +21,16 @@ app.use(cors({
     }
   },
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+  allowedHeaders: ['Content-Type'],
+};
 
+// Aplicar CORS globalmente
+app.use(cors(corsOptions));
+
+// Permitir preflight específicamente en esta ruta
+app.options('/sendForm', cors(corsOptions));
+
+// Middleware para parsear JSON
 app.use(express.json());
 
 // Ruta POST para recibir datos del formulario
