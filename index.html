@@ -285,26 +285,25 @@
     };
 
     fetch('https://formulario-i4n3.onrender.com/sendForm', {
-  method: 'POST',
-  body: JSON.stringify(data),
-  headers: {
-    'Content-Type': 'application/json',
-  }
-})
-.then(res => {
-  if (!res.ok) throw new Error("Respuesta del servidor no OK");
-  return res.json();
-})
-.then(result => {
-  alert(result.message || "Datos guardados con éxito");
-  document.getElementById("quizForm1").reset();
-  window.location.href = "index2.html";
-})
-.catch(err => {
-  alert('Error al enviar: ' + err.message);
-  console.error(err);
-});
-
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+      
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Respuesta del servidor no OK");
+      return res.json();  // usar .json() si tu servidor responde con JSON
+    })
+    .then(result => {
+      alert(result.message || "Datos guardados con exito");
+      document.getElementById("quizForm1").reset();
+      window.location.href = "index2.html";
+    })
+    .catch(err => {
+      alert('Error al enviar: ' + err.message);
+    });
   });
 </script>
 
