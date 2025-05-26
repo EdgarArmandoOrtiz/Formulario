@@ -5,27 +5,32 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// CORS abierto para frontend locales y GitHub Pages
+// Lista de orígenes permitidos
 const allowedOrigins = [
   'http://127.0.0.1:5500',
   'https://edgararmandoortiz.github.io'
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS no permitido'));
-    }
-  },
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+// Configurar CORS
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200); // Responder a preflight request
+  }
+
+  next();
+});
 
 app.use(express.json());
 
-// Ruta para formulario
+// Ruta POST para recibir datos del formulario
 app.post('/sendForm', async (req, res) => {
   const formData = req.body;
 
@@ -40,6 +45,7 @@ app.post('/sendForm', async (req, res) => {
     });
 
     const text = await response.text();
+
     if (response.ok) {
       res.status(200).json({ message: 'Formulario enviado con éxito', response: text });
     } else {
