@@ -1,5 +1,5 @@
 const express = require('express');
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const cors = require('cors');
 
 const app = express(); // <-- Aquí defines app
@@ -14,7 +14,7 @@ app.post('/sendForm', async (req, res) => {
   console.log("Datos recibidos del frontend:", formData);
 
   try {
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbzClaOyG2riE9A3cqNUR6U958IvgGfK1yTUZt1mIrDzKzkubk67dixNj_Ws8H9CCkk/exec';
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbx6Fv3aMrO4Zzsj4MRgvohE5UKc_aw8flqaL3pYz5XDXqaTlLMoUTeNjhC_QqgXr4jO/exec';
 
     // Convertir el objeto a query string
     const params = new URLSearchParams(formData);

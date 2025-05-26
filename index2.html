@@ -7,7 +7,42 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   
   <style>
-    
+    /* Estilos del modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+}
+
+.close {
+  color: #aaa;
+  font-size: 24px;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
     body {
       font-family: 'Roboto', sans-serif;
       background: #e3eafc;
@@ -148,6 +183,12 @@
         <label for="correo">Correo electrónico</label>
         <input type="email" id="correo" placeholder="correo@ejemplo.com">
       </div>
+<div class="pregunta">
+  <label>
+    <input type="checkbox" required>
+    He leído y acepto el <a href="#" id="openModal">Aviso de Privacidad</a>
+  </label>
+</div>
 
       <button type="submit">Enviar</button>
     </form>
@@ -189,5 +230,49 @@
     });
   });
 </script>
+
+<!-- Modal -->
+<div id="modalAviso" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Aviso de Privacidad</h2>
+    <p>
+       <strong>Aviso de privacidad:</strong> La Defensoría de los Derechos Humanos del Pueblo de Oaxaca, con domicilio en la calle de los Derechos Humanos 2010, Colonia América Sur, Oaxaca de Juárez,  Oaxaca, es el Responsable del tratamiento de los datos personales que usted proporcione; los cuales serán protegidos conforme a lo dispuesto por la Ley de Datos Personales en Posesión de Sujetos Obligados del Estado de Oaxaca, y demás normatividad que resulte aplicable.
+
+    </p>
+    <h3>Uso de la información</h3>
+    <p>
+      La información proporcionada será utilizada únicamente para contacto . No será compartida con terceros.
+    </p>
+    <h3>Derechos ARCO</h3>
+    <p>
+      Usted puede solicitar el acceso, rectificación, cancelación u oposición de sus datos mediante contacto a: <strong>privacidad@institucion.edu.mx</strong>.
+    </p>
+    <p style="font-size: 12px; color: #777;">Última actualización: mayo 2025</p>
+  </div>
+</div>
+
+<!-- Script para el modal -->
+<script>
+  const modal = document.getElementById("modalAviso");
+  const openBtn = document.getElementById("openModal");
+  const closeBtn = document.querySelector(".close");
+
+  openBtn.onclick = function (e) {
+    e.preventDefault();
+    modal.style.display = "block";
+  }
+
+  closeBtn.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
 </body>
 </html>
