@@ -5,10 +5,12 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+
+
 // Lista de orígenes permitidos
 const allowedOrigins = [
   'http://127.0.0.1:5500',
-  'https://edgararmandoortiz.github.io'
+  'https://edgararmandoortiz.github.io/Formulario/'
 ];
 
 // Configurar CORS
@@ -29,6 +31,8 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+
+
 
 // Ruta POST para recibir datos del formulario
 app.post('/sendForm', async (req, res) => {
