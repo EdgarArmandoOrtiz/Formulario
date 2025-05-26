@@ -3,7 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <title>Formulario de Registro</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+<style>
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px 35px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    position: relative;
+    color: #333;
+  }
+
+  .modal-content h2 {
+    color: #2a4abf;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .modal-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #2a4abf;
+  }
+
+  .modal-content p {
+    line-height: 1.5;
+    font-size: 15px;
+  }
+
+  .modal-content p:last-child {
+    font-size: 12px;
+    color: #777;
+    margin-top: 25px;
+  }
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .close:hover {
+    color: #000;
+  }
+
+  /* Link del aviso */
+  a#openModal {
+    color: #2a4abf;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  a#openModal:hover {
+    color: #1d3699;
+  }
+</style>
   
   <style>
     /* Estilos del modal */

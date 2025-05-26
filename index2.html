@@ -34,40 +34,40 @@
     h2 {
       text-align: center;
       color: #2a4abf;
-      margin-bottom: 10px;
-    }
-
-    p {
-      text-align: center;
-      color: #444;
-      font-weight: bold;
       margin-bottom: 30px;
     }
 
     .pregunta {
       margin-bottom: 25px;
+      text-align: left;
     }
 
-    label {
+    .pregunta label {
+      display: block;
+      margin-bottom: 8px;
       font-weight: bold;
-      color: #333;
+      color: #2a2a2a;
     }
 
-    input[type="radio"],
+    input[type="radio"] {
+      margin: 6px 8px 6px 0;
+    }
+
     input[type="number"],
-    input[type="text"] {
-      margin-top: 8px;
-      margin-bottom: 5px;
-    }
-
     input[type="text"],
-    input[type="number"] {
+    input[type="email"],
+    input[type="tel"],
+    select {
       width: 100%;
       padding: 10px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      margin-top: 8px;
+      margin-top: 6px;
+    }
+
+    input::placeholder {
+      color: #aaa;
     }
 
     button {
@@ -88,59 +88,78 @@
       background-color: #1d3699;
     }
 
-    /* Modal estilos */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
-      z-index: 9999;
-      padding-top: 80px;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      z-index: 10000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
       overflow: auto;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0,0,0,0.6);
     }
 
     .modal-content {
       background-color: #fff;
-      margin: auto;
-      padding: 30px;
-      border: 1px solid #888;
-      width: 80%;
+      margin: 10% auto;
+      padding: 30px 35px;
+      border-radius: 12px;
+      width: 90%;
       max-width: 600px;
-      border-radius: 8px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
       position: relative;
+      color: #333;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .modal-content h2 {
+      color: #2a4abf;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .modal-content h3 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: #2a4abf;
+    }
+
+    .modal-content p {
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .modal-content p:last-child {
+      font-size: 12px;
+      color: #777;
+      margin-top: 25px;
     }
 
     .close {
-      color: #aaa;
       position: absolute;
-      top: 10px;
+      top: 15px;
       right: 20px;
+      color: #aaa;
       font-size: 28px;
       font-weight: bold;
       cursor: pointer;
+      transition: color 0.3s;
     }
 
     .close:hover {
       color: #000;
     }
 
-    .privacy-button {
-      display: block;
-      text-align: center;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .privacy-button a {
+    a#openModal {
       color: #2a4abf;
       text-decoration: underline;
       cursor: pointer;
     }
 
+    a#openModal:hover {
+      color: #1d3699;
+    }
   </style>
 </head>
 <body>
@@ -149,7 +168,7 @@
     <img src="logo.png" alt="Logo Institucional">
   </div>
 
-  <div class="container">
+ <div class="container">
     <h2>“DERECHO A UNA VIDA LIBRE DE VIOLENCIA DE GÉNERO:<br>PREVENCIÓN DE LA VIOLENCIA OBSTÉTRICA”</h2>
     <p>Cuestionario de entrada/salida para el panel – SUNEO</p>
 
@@ -188,26 +207,26 @@
         <input type="radio" name="q5" value="correcta"> b) Cierta.<br>
         <input type="radio" name="q5" value="incorrecta"> c) Falsa.<br>
       </div>
-
-      <!-- Repite las demás preguntas igual -->
-
       <div class="pregunta">
-        <label>6. Califica de 1 a 10 a la persona expositora:</label><br>
+        <label>6. Califica de 1 a 10 a la persona expositora:</label>
         <input type="number" name="q6" min="1" max="10" required>
       </div>
 
       <div class="pregunta">
-        <label>7. ¿Qué tan útiles y sencillos fueron los contenidos?</label><br>
+        <label>7. ¿Qué tan útiles y sencillos fueron los contenidos?</label>
         <input type="number" name="q7" min="1" max="10" required>
       </div>
 
       <div class="pregunta">
-        <label>Tu nombre completo para la constancia:</label><br>
+        <label>Tu nombre completo para la constancia:</label>
         <input type="text" id="nombre" required>
       </div>
 
-      <div class="privacy-button">
-        <a id="abrirModal">Ver aviso de privacidad</a>
+      <div class="pregunta">
+        <label>
+          <input type="checkbox" required>
+          He leído y acepto el <a href="#" id="openModal">Aviso de Privacidad</a>
+        </label>
       </div>
 
       <button type="submit">Enviar</button>
@@ -217,53 +236,37 @@
   <!-- Modal -->
   <div id="modalAviso" class="modal">
     <div class="modal-content">
-      <span class="close" id="cerrarModal">&times;</span>
+      <span class="close">&times;</span>
       <h2>Aviso de Privacidad</h2>
-      <p><strong>La Defensoría de los Derechos Humanos del Pueblo de Oaxaca</strong>, con domicilio en la calle de los Derechos Humanos 2010, Colonia América Sur, Oaxaca de Juárez, Oaxaca, es el Responsable del tratamiento de los datos personales que usted proporcione; los cuales serán protegidos conforme a lo dispuesto por la <strong>Ley de Datos Personales en Posesión de Sujetos Obligados del Estado de Oaxaca</strong>, y demás normatividad que resulte aplicable.</p>
+      <p><strong>Aviso de privacidad:</strong> La Defensoría de los Derechos Humanos del Pueblo de Oaxaca</strong>, con domicilio en la calle de los Derechos Humanos 2010, Colonia América Sur, Oaxaca de Juárez, Oaxaca, es el Responsable del tratamiento de los datos personales que usted proporcione; los cuales serán protegidos conforme a lo dispuesto por la <strong>Ley de Datos Personales en Posesión de Sujetos Obligados del Estado de Oaxaca</strong>, y demás normatividad que resulte aplicable.</p>
       <h3>Uso de la información</h3>
       <p>La información proporcionada será utilizada únicamente para contacto. No será compartida con terceros.</p>
       <h3>Derechos ARCO</h3>
-      <p>Usted puede solicitar el acceso, rectificación, cancelación u oposición de sus datos mediante contacto a: <strong>privacidad@institucion.edu.mx</strong>.</p>
-      <p style="font-size: 12px; color: #777;">Última actualización: mayo 2025</p>
+      <p>Puede solicitar acceso, rectificación, cancelación u oposición mediante: <strong>privacidad@institucion.edu.mx</strong>.</p>
+      <p>Última actualización: mayo 2025</p>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
-    document.getElementById("quizForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const respuestas = new FormData(this);
-      const nombre = document.getElementById("nombre").value.trim();
-      let correctas = 0;
-      for (let i = 1; i <= 5; i++) {
-        if (respuestas.get("q" + i) === "correcta") correctas++;
-      }
-      const porcentaje = (correctas / 5) * 100;
-      if (porcentaje >= 70) {
-        localStorage.setItem("nombreAlumno", nombre);
-        window.location.href = "certificado.html";
-      } else {
-        alert("No aprobaste el cuestionario. Inténtalo nuevamente.");
-      }
-    });
-
     const modal = document.getElementById("modalAviso");
-    const abrir = document.getElementById("abrirModal");
-    const cerrar = document.getElementById("cerrarModal");
+    const openBtn = document.getElementById("openModal");
+    const closeBtn = document.querySelector(".close");
 
-    abrir.onclick = function () {
+    openBtn.onclick = function (e) {
+      e.preventDefault();
       modal.style.display = "block";
     }
 
-    cerrar.onclick = function () {
+    closeBtn.onclick = function () {
       modal.style.display = "none";
     }
 
     window.onclick = function (event) {
-      if (event.target === modal) {
+      if (event.target == modal) {
         modal.style.display = "none";
       }
     }
   </script>
+
 </body>
 </html>
