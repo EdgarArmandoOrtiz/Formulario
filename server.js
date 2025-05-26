@@ -6,9 +6,21 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+
+app.use(cors({
+  origin: [
+    'http://127.0.0.1:5500',
+    'http://localhost:5500',
+    'https://edgararmandoortiz.github.io'
+  ],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
 
 // Sirve archivos estáticos si tienes frontend en la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
