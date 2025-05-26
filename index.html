@@ -53,12 +53,15 @@
       color: #333;
     }
 
-    input[type="radio"], input[type="number"], input[type="text"] {
+    input[type="radio"],
+    input[type="number"],
+    input[type="text"] {
       margin-top: 8px;
       margin-bottom: 5px;
     }
 
-    input[type="text"], input[type="number"] {
+    input[type="text"],
+    input[type="number"] {
       width: 100%;
       padding: 10px;
       font-size: 14px;
@@ -85,6 +88,59 @@
       background-color: #1d3699;
     }
 
+    /* Modal estilos */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      padding-top: 80px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+
+    .privacy-button {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .privacy-button a {
+      color: #2a4abf;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
@@ -98,10 +154,6 @@
     <p>Cuestionario de entrada/salida para el panel – SUNEO</p>
 
     <form id="quizForm">
-      <!-- Preguntas del cuestionario (ya están completas) -->
-      <!-- [Tu formulario aquí, no modificado por brevedad] -->
-      <!-- ... copiar preguntas desde tu versión anterior ... -->
-
       <div class="pregunta">
         <label>1. ¿Qué son los derechos humanos?</label><br>
         <input type="radio" name="q1" value="incorrecta"> a) Los derechos que tienen todas las personas para que se garantice su acceso a la salud.<br>
@@ -137,13 +189,15 @@
         <input type="radio" name="q5" value="incorrecta"> c) Falsa.<br>
       </div>
 
+      <!-- Repite las demás preguntas igual -->
+
       <div class="pregunta">
-        <label>6. Califica de 1 a 10 a la persona expositora (1 = no comprensible, 10 = muy entendible):</label><br>
+        <label>6. Califica de 1 a 10 a la persona expositora:</label><br>
         <input type="number" name="q6" min="1" max="10" required>
       </div>
 
       <div class="pregunta">
-        <label>7. ¿Qué tan útiles y sencillos fueron los contenidos? (1 = nada útiles, 10 = muy útiles):</label><br>
+        <label>7. ¿Qué tan útiles y sencillos fueron los contenidos?</label><br>
         <input type="number" name="q7" min="1" max="10" required>
       </div>
 
@@ -151,25 +205,40 @@
         <label>Tu nombre completo para la constancia:</label><br>
         <input type="text" id="nombre" required>
       </div>
-<p>Redirigiendo a <a href="index2.html">index2.html</a>...</p>
+
+      <div class="privacy-button">
+        <a id="abrirModal">Ver aviso de privacidad</a>
+      </div>
+
       <button type="submit">Enviar</button>
     </form>
   </div>
 
+  <!-- Modal -->
+  <div id="modalAviso" class="modal">
+    <div class="modal-content">
+      <span class="close" id="cerrarModal">&times;</span>
+      <h2>Aviso de Privacidad</h2>
+      <p><strong>La Defensoría de los Derechos Humanos del Pueblo de Oaxaca</strong>, con domicilio en la calle de los Derechos Humanos 2010, Colonia América Sur, Oaxaca de Juárez, Oaxaca, es el Responsable del tratamiento de los datos personales que usted proporcione; los cuales serán protegidos conforme a lo dispuesto por la <strong>Ley de Datos Personales en Posesión de Sujetos Obligados del Estado de Oaxaca</strong>, y demás normatividad que resulte aplicable.</p>
+      <h3>Uso de la información</h3>
+      <p>La información proporcionada será utilizada únicamente para contacto. No será compartida con terceros.</p>
+      <h3>Derechos ARCO</h3>
+      <p>Usted puede solicitar el acceso, rectificación, cancelación u oposición de sus datos mediante contacto a: <strong>privacidad@institucion.edu.mx</strong>.</p>
+      <p style="font-size: 12px; color: #777;">Última actualización: mayo 2025</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script>
     document.getElementById("quizForm").addEventListener("submit", function (e) {
       e.preventDefault();
-
       const respuestas = new FormData(this);
       const nombre = document.getElementById("nombre").value.trim();
       let correctas = 0;
-
       for (let i = 1; i <= 5; i++) {
         if (respuestas.get("q" + i) === "correcta") correctas++;
       }
-
       const porcentaje = (correctas / 5) * 100;
-
       if (porcentaje >= 70) {
         localStorage.setItem("nombreAlumno", nombre);
         window.location.href = "certificado.html";
@@ -177,6 +246,24 @@
         alert("No aprobaste el cuestionario. Inténtalo nuevamente.");
       }
     });
+
+    const modal = document.getElementById("modalAviso");
+    const abrir = document.getElementById("abrirModal");
+    const cerrar = document.getElementById("cerrarModal");
+
+    abrir.onclick = function () {
+      modal.style.display = "block";
+    }
+
+    cerrar.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
   </script>
 </body>
 </html>

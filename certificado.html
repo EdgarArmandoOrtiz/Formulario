@@ -22,10 +22,10 @@
       img.onload = function () {
         doc.addImage(img, 'JPEG', 0, 0, 297, 210); // A4 horizontal
 
-        doc.setFont("Times", "italic"); // o usa una fuente personalizada si quieres
-        doc.setFontSize(28);
-        doc.setTextColor(233, 183, 46); // #e9b72e
-        doc.text(nombre, 148, 110, { align: "center" });
+        doc.setFont("Arial", "normal"); 
+        doc.setFontSize(35);
+        doc.setTextColor(0, 0, 102); // #3339ff
+        doc.text(nombre, 148, 120, { align: "center" });
 
         doc.save(`constancia-${nombre}.pdf`);
         document.body.innerHTML = `<h2>🎉 Constancia generada. Revisa tu carpeta de descargas.</h2>`;
