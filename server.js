@@ -24,6 +24,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type'],
 };
 
+
 // Aplicar CORS globalmente
 app.use(cors(corsOptions));
 
