@@ -5,15 +5,16 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Lista de orígenes permitidos
+// Orígenes permitidos
 const allowedOrigins = [
   'http://127.0.0.1:5500',
   'https://edgararmandoortiz.github.io'
 ];
 
-// Opciones de CORS
+// Configuración CORS
 const corsOptions = {
-  origin: function (origin, callback) {
+  origin: function(origin, callback) {
+    // Permitir solicitudes sin origin (ej. Postman) o que estén en la lista
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -24,17 +25,15 @@ const corsOptions = {
   allowedHeaders: ['Content-Type'],
 };
 
-
-// Aplicar CORS globalmente
+// Aplica CORS a todas las rutas
 app.use(cors(corsOptions));
 
-// Permitir preflight específicamente en esta ruta
-app.options('/sendForm', cors(corsOptions));
+// Asegura que responde a preflight
+app.options('*', cors(corsOptions));
 
 // Middleware para parsear JSON
 app.use(express.json());
 
-// Ruta POST para recibir datos del formulario
 app.post('/sendForm', async (req, res) => {
   const formData = req.body;
 
@@ -55,7 +54,6 @@ app.post('/sendForm', async (req, res) => {
     } else {
       res.status(response.status).json({ error: 'Error al enviar al script', details: text });
     }
-
   } catch (error) {
     res.status(500).json({ error: 'Error del servidor', details: error.message });
   }
