@@ -3,7 +3,7 @@ const cors = require('cors');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // CORS abierto para frontend locales y GitHub Pages
 const allowedOrigins = [
