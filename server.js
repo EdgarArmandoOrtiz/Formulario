@@ -2,10 +2,27 @@ const express = require('express');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const cors = require('cors');
 
-const app = express(); // <-- Aquí defines app
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// Origen permitido (solo tu GitHub Pages)
+const allowedOrigins = [
+  'https://edgararmandoortiz.github.io'
+];
+
+// Configuración CORS personalizada
+const corsOptions = {
+  origin: function(origin, callback) {
+    // Permite solicitudes sin origin (como Postman) o si el origen está en la lista
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  }
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/sendForm', async (req, res) => {
@@ -16,13 +33,12 @@ app.post('/sendForm', async (req, res) => {
   try {
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbx6Fv3aMrO4Zzsj4MRgvohE5UKc_aw8flqaL3pYz5XDXqaTlLMoUTeNjhC_QqgXr4jO/exec';
 
-    // Convertir el objeto a query string
     const params = new URLSearchParams(formData);
 
     const response = await fetch(scriptUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()  // enviar como texto url encoded
+      body: params.toString()
     });
 
     const text = await response.text();
@@ -30,9 +46,6 @@ app.post('/sendForm', async (req, res) => {
     if (response.ok) {
       res.status(200).send({ message: 'Formulario enviado con éxito', response: text });
       console.log("Enviando datos al script:", params.toString());
-      console.log("Datos que se enviarán al script:", params.toString());
-
-
     } else {
       res.status(response.status).send({ error: 'Error al enviar al script', details: text });
     }
