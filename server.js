@@ -16,7 +16,8 @@ app.use(cors({
 }));
 
 // ✅ Manejar preflight correctamente
-app.options('*', cors());
+app.options('/*', cors());
+
 
 // 📤 Ruta POST para recibir y reenviar el formulario
 app.post('/sendForm', async (req, res) => {
