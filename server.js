@@ -5,19 +5,13 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware para parsear JSON
-app.use(express.json());
-
-// Define los orígenes permitidos en un array
 const allowedOrigins = [
   'https://edgararmandoortiz.github.io',
-  'https://formulario-i4n3.onrender.com' // Cambia esto por la URL de tu servidor Render real
+  'https://formulario-i4n3.onrender.com' // tu dominio en Render
 ];
 
-// Configuración dinámica de CORS
 const corsOptions = {
   origin: function (origin, callback) {
-    // Permite requests sin origen (como herramientas de testeo o curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
@@ -29,7 +23,24 @@ const corsOptions = {
   allowedHeaders: ['Content-Type']
 };
 
+app.use(express.json());
 
+// Middleware para manejar OPTIONS con headers CORS
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.header('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    return res.sendStatus(204);
+  }
+  next();
+});
+
+// Middleware cors para otras solicitudes
+app.use(cors(corsOptions));
 
 // Ruta para procesar formulario
 app.post('/sendForm', async (req, res) => {
