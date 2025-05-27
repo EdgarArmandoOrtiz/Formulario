@@ -5,15 +5,23 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middleware para parsear JSON
 app.use(express.json());
 
-// CORS: GitHub Pages
-app.use(cors({
+// Configura CORS para tu dominio y métodos permitidos
+const corsOptions = {
   origin: 'https://edgararmandoortiz.github.io',
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+  allowedHeaders: ['Content-Type'],
+};
+
+// Usa CORS en todas las rutas
+app.use(cors(corsOptions));
+
+// Responde explícitamente a preflight OPTIONS para todas las rutas
+app.options('*', cors(corsOptions), (req, res) => {
+  res.sendStatus(204);
+});
 
 // Ruta para procesar formulario
 app.post('/sendForm', async (req, res) => {
