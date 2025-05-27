@@ -3,7 +3,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const cors = require('cors');
 
 const app = express(); // <-- Aquí defines app
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 const allowedOrigins = [
   'https://edgararmandoortiz.github.io'
