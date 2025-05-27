@@ -267,6 +267,29 @@
       }
     }
   </script>
+<script>
 
+    // Envío del formulario
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const respuestas = new FormData(this);
+      const nombre = document.getElementById("nombre").value.trim();
+      let correctas = 0;
+
+      for (let i = 1; i <= 5; i++) {
+        if (respuestas.get("q" + i) === "correcta") correctas++;
+      }
+
+      const porcentaje = (correctas / 5) * 100;
+
+      if (porcentaje >= 70) {
+        localStorage.setItem("nombreAlumno", nombre);
+        window.location.href = "certificado.html";
+      } else {
+        alert("No aprobaste el cuestionario. Inténtalo nuevamente.");
+      }
+    });
+  </script>
 </body>
 </html>
