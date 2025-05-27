@@ -5,21 +5,17 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware para parsear JSON
+// Middleware
 app.use(express.json());
 
-// ✅ Configurar CORS correctamente
+// CORS: GitHub Pages
 app.use(cors({
-  origin: 'https://edgararmandoortiz.github.io', // Tu GitHub Pages
+  origin: 'https://edgararmandoortiz.github.io',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
 
-// ✅ Manejar preflight correctamente
-app.options('/*', cors());
-
-
-// 📤 Ruta POST para recibir y reenviar el formulario
+// Ruta para procesar formulario
 app.post('/sendForm', async (req, res) => {
   const formData = req.body;
   console.log("📥 Datos recibidos:", formData);
@@ -27,7 +23,6 @@ app.post('/sendForm', async (req, res) => {
   try {
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbx6Fv3aMrO4Zzsj4MRgvohE5UKc_aw8flqaL3pYz5XDXqaTlLMoUTeNjhC_QqgXr4jO/exec';
 
-    // Codificar los datos como x-www-form-urlencoded
     const params = new URLSearchParams(formData);
 
     const response = await fetch(scriptUrl, {
