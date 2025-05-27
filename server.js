@@ -1,20 +1,20 @@
 const express = require('express');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const cors = require('cors');
 
-const app = express(); // <-- Aquí defines app
+const app = express();
 const PORT = process.env.PORT || 10000;
 
+// Orígenes permitidos
 const allowedOrigins = [
-  'https://edgararmandoortiz.github.io'
+  'https://edgararmandoortiz.github.io',
+  'http://127.0.0.1:5500'  // Opcional, útil para desarrollo local
 ];
 
-app.use(cors());
+// Middleware para JSON
 app.use(express.json());
 
-app.options('*', cors());
-
-
+// Configurar CORS
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -27,35 +27,33 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 
-app.use(cors(corsOptions));
-app.use(express.json());
+// Aceptar preflight requests (OPTIONS)
+app.options('*', cors());
 
+// Ruta para recibir el formulario
 app.post('/sendForm', async (req, res) => {
   const formData = req.body;
-
   console.log("Datos recibidos del frontend:", formData);
 
   try {
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbx6Fv3aMrO4Zzsj4MRgvohE5UKc_aw8flqaL3pYz5XDXqaTlLMoUTeNjhC_QqgXr4jO/exec';
 
-    // Convertir el objeto a query string
+    // Convertir el objeto en URL-encoded string
     const params = new URLSearchParams(formData);
 
     const response = await fetch(scriptUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()  // enviar como texto url encoded
+      body: params.toString()
     });
 
     const text = await response.text();
 
     if (response.ok) {
+      console.log("Datos enviados al script correctamente.");
       res.status(200).send({ message: 'Formulario enviado con éxito', response: text });
-      console.log("Enviando datos al script:", params.toString());
-      console.log("Datos que se enviarán al script:", params.toString());
-
-
     } else {
+      console.error("Error en respuesta del script:", text);
       res.status(response.status).send({ error: 'Error al enviar al script', details: text });
     }
 
