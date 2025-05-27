@@ -5,16 +5,13 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Orígenes permitidos
 const allowedOrigins = [
   'https://edgararmandoortiz.github.io',
-  'http://127.0.0.1:5500'  // Opcional, útil para desarrollo local
+  'http://127.0.0.1:5500'
 ];
 
-// Middleware para JSON
 app.use(express.json());
 
-// Configurar CORS
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -23,14 +20,10 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }));
 
-// Aceptar preflight requests (OPTIONS)
-app.options('*', cors());
-
-// Ruta para recibir el formulario
 app.post('/sendForm', async (req, res) => {
   const formData = req.body;
   console.log("Datos recibidos del frontend:", formData);
@@ -38,7 +31,6 @@ app.post('/sendForm', async (req, res) => {
   try {
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbx6Fv3aMrO4Zzsj4MRgvohE5UKc_aw8flqaL3pYz5XDXqaTlLMoUTeNjhC_QqgXr4jO/exec';
 
-    // Convertir el objeto en URL-encoded string
     const params = new URLSearchParams(formData);
 
     const response = await fetch(scriptUrl, {

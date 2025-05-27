@@ -285,12 +285,13 @@
     };
 
     fetch('https://formulario-i4n3.onrender.com/sendForm', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+})
+
     .then(res => {
       if (!res.ok) {
         throw new Error(`Error del servidor: ${res.status}`);
