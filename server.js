@@ -6,7 +6,6 @@ const app = express(); // <-- Aquí defines app
 const PORT = process.env.PORT || 10000;
 
 const allowedOrigins = [
-  'http://127.0.0.1:5500',
   'https://edgararmandoortiz.github.io'
 ];
 
