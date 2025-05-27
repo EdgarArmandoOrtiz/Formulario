@@ -286,18 +286,19 @@
 
     fetch('https://formulario-i4n3.onrender.com/sendForm', {
       method: 'POST',
-      body: JSON.stringify(data),
       headers: {
-        'Content-Type': 'application/json',
-      }
-      
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
     .then(res => {
-      if (!res.ok) throw new Error("Respuesta del servidor no OK");
-      return res.json();  // usar .json() si tu servidor responde con JSON
+      if (!res.ok) {
+        throw new Error(`Error del servidor: ${res.status}`);
+      }
+      return res.json();
     })
     .then(result => {
-      alert(result.message || "Datos guardados con exito");
+      alert(result.message || "Datos guardados con éxito");
       document.getElementById("quizForm1").reset();
       window.location.href = "index2.html";
     })
@@ -306,6 +307,7 @@
     });
   });
 </script>
+
 
 
 <!-- Modal -->

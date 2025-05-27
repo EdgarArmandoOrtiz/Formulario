@@ -6,22 +6,27 @@ const app = express(); // <-- Aquí defines app
 const PORT = process.env.PORT || 10000;
 
 const allowedOrigins = [
+  'http://127.0.0.1:5500',
   'https://edgararmandoortiz.github.io'
 ];
 
 app.use(cors());
 app.use(express.json());
 
-const corsOptions = {
-  origin: function(origin, callback) {
-    // Permite solicitudes sin origin (como Postman) o si el origen está en la lista
+app.options('*', cors());
+
+
+app.use(cors({
+  origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('No permitido por CORS'));
+      callback(new Error('Not allowed by CORS'));
     }
-  }
-};
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 
 app.use(cors(corsOptions));
 app.use(express.json());
