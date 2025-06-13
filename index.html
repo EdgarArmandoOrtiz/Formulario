@@ -214,9 +214,27 @@
       </div>
 
       <div class="pregunta">
-        <label for="edad">¿Edad?</label>
-        <input type="text" id="edad" placeholder="Ej. 22 años" required>
-      </div>
+  <label for="edad">¿Grupo de edad?</label>
+  <select id="edad" required>
+    <option value="">Selecciona</option>
+    <option value="0-4">0 a 4 años</option>
+    <option value="5-9">5 a 9 años</option>
+    <option value="10-14">10 a 14 años</option>
+    <option value="15-19">15 a 19 años</option>
+    <option value="20-24">20 a 24 años</option>
+    <option value="25-29">25 a 29 años</option>
+    <option value="30-34">30 a 34 años</option>
+    <option value="35-39">35 a 39 años</option>
+    <option value="40-44">40 a 44 años</option>
+    <option value="45-49">45 a 49 años</option>
+    <option value="50-54">50 a 54 años</option>
+    <option value="55-59">55 a 59 años</option>
+    <option value="60-64">60 a 64 años</option>
+    <option value="65-69">65 o mas</option>
+
+  </select>
+</div>
+
 
       <div class="pregunta">
         <label for="sexo">¿Sexo?</label>
@@ -230,24 +248,113 @@
       </div>
 
       <div class="pregunta">
-        <label for="pueblo">¿Pertenece a un Pueblo Indígena y/o Afromexicano/a? ¿Cuál?</label>
-        <input type="text" id="pueblo" placeholder="Ej. Mixteco, Zapoteco, Afromexicano, etc.">
-      </div>
+  <label for="pueblo">¿Pertenece a un Pueblo Indígena y/o Afromexicano/a? ¿Cuál?</label>
+  <select id="pueblo" required>
+    <option value="">Selecciona</option>
+    <option value="afromexicano">Afromexicano/a</option>
+    <option value="mazateco">Mazateco</option>
+    <option value="zapoteco_istmo">Zapoteco del Istmo</option>
+    <option value="zapoteco_valles">Zapoteco de los Valles Centrales</option>
+    <option value="zapoteco_sierra">Zapoteco de la Sierra Norte</option>
+    <option value="mixteco_guerrero">Mixteco de Guerrero</option>
+    <option value="mixteco_oaxaca">Mixteco de Oaxaca</option>
+    <option value="mixteco_puebla">Mixteco de Puebla</option>
+    <option value="triqui">Triqui</option>
+    <option value="huave">Huave</option>
+    <option value="chontal">Chontal de Oaxaca</option>
+    <option value="ixcateco">Ixcateco</option>
+    <option value="chocholteco">Chocholteco</option>
+    <option value="chinanteco">Chinanteco</option>
+    <option value="totonaco">Totonaco</option>
+    <option value="mixe">Mixe</option>
+    <option value="xtoka">Xtoka</option>
+    <option value="cuicateco">Cuicateco</option>
+    <option value="tepehuano">Tepehuano</option>
+    <option value="nahua">Nahua</option>
+  </select>
+</div>
+
 
       <div class="pregunta">
-        <label for="lengua">¿Habla alguna lengua indígena? ¿Cuál?</label>
-        <input type="text" id="lengua" placeholder="Ej. Zapoteco, Mixe, No">
-      </div>
+  <label for="habla-lengua">¿Habla alguna lengua indígena?</label>
+  <select id="habla-lengua" required onchange="mostrarCampoLengua()">
+    <option value="">Selecciona</option>
+    <option value="si">Sí</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="pregunta" id="campo-lengua" style="display: none;">
+  <label for="lengua">¿Cuál?</label>
+  <input type="text" id="lengua" placeholder="Ej. Zapoteco, Mixe, etc.">
+</div>
+
+<script>
+  function mostrarCampoLengua() {
+    const seleccion = document.getElementById('habla-lengua').value;
+    const campoLengua = document.getElementById('campo-lengua');
+    campoLengua.style.display = seleccion === 'si' ? 'block' : 'none';
+  }
+</script>
+
 
       <div class="pregunta">
-        <label for="discapacidad">¿Presenta algún tipo de discapacidad? ¿Cuál?</label>
-        <input type="text" id="discapacidad" placeholder="Ej. Visual, auditiva, motriz, ninguna">
-      </div>
+  <label for="tiene-discapacidad">¿Presenta algún tipo de discapacidad?</label>
+  <select id="tiene-discapacidad" required onchange="mostrarTiposDiscapacidad()">
+    <option value="">Selecciona</option>
+    <option value="si">Sí</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="pregunta" id="tipos-discapacidad" style="display: none;">
+  <label for="discapacidad">¿Cuál?</label>
+  <select id="discapacidad">
+    <option value="">Selecciona</option>
+    <option value="motriz">Motriz</option>
+    <option value="visual">Visual</option>
+    <option value="auditiva">Auditiva</option>
+    <option value="intelectual">Intelectual</option>
+    <option value="psicosocial">Psicosocial</option>
+    <option value="lenguaje_comunicacion">Lenguaje o comunicación</option>
+    <option value="otra">Otra</option>
+  </select>
+</div>
+
+<script>
+  function mostrarTiposDiscapacidad() {
+    const seleccion = document.getElementById('tiene-discapacidad').value;
+    const campoTipos = document.getElementById('tipos-discapacidad');
+    campoTipos.style.display = seleccion === 'si' ? 'block' : 'none';
+  }
+</script>
+
 
       <div class="pregunta">
-        <label for="institucion">Institución</label>
-        <input type="text" id="institucion" placeholder="Nombre de la universidad, preparatoria, etc.">
-      </div>
+  <label for="nivel-educativo">Nivel educativo de la institución</label>
+  <select id="nivel-educativo" required onchange="mostrarCampoInstitucion()">
+    <option value="">Selecciona</option>
+    <option value="preescolar">Preescolar</option>
+    <option value="primaria">Primaria</option>
+    <option value="secundaria">Secundaria</option>
+    <option value="preparatoria">Preparatoria</option>
+    <option value="universidad">Universidad</option>
+  </select>
+</div>
+
+<div class="pregunta" id="campo-institucion" style="display: none;">
+  <label for="institucion">Especifique</label>
+  <input type="text" id="institucion" placeholder="Nombre de la universidad, preparatoria, etc.">
+</div>
+
+<script>
+  function mostrarCampoInstitucion() {
+    const seleccion = document.getElementById('nivel-educativo').value;
+    const campo = document.getElementById('campo-institucion');
+    campo.style.display = seleccion ? 'block' : 'none';
+  }
+</script>
+
 
       <div class="pregunta">
         <label for="telefono">Teléfono</label>
